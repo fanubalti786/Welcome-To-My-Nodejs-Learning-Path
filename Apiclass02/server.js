@@ -35,4 +35,35 @@ app.get('/users', (req,res)=>
         }
             
     })
+
+
+
+    app.get('/users/:id', (req,res)=>
+        {
+    
+            console.log("dynamic Routing parameter recieve :", req.params)
+        
+            let users = [{
+                name : req.query?.name,
+                rollno: req.query?.rollno,
+                class: "BSSE-IV"
+            }]
+        
+            try {
+                 res.status(201).json(
+                    {
+                        data: users,
+                        status: "success"
+                    }
+                 );
+            } catch (error) {
+                res.status(401).json(
+                    {
+                        data: [],
+                        status: "error"
+                    }
+                )
+            }
+                
+        })
     
