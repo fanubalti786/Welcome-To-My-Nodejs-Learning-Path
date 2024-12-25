@@ -156,4 +156,7 @@ app.get('/users', (req,res)=>
 
 
                 // 5. COOKIE-PARSAR
+                // 6. SOKETIO
+                // 7. GRAPHQL
+                // 8. SERVER ENVENT
 
