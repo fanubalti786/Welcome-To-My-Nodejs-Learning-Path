@@ -92,14 +92,14 @@ app.get('/users', (req,res)=>
 
         // BODY PARAMETER
 
-        app.get('/users/dog', (req,res)=>
+        app.get('/users/body', (req,res)=>
             {
         
                 console.log("Body parameter recieve :", req.body)
             
                 let users = [{
-                    name : req.query?.name,
-                    rollno: req.query?.rollno,
+                    name : req.body.name,
+                    rollno: req.body.email,
                     class: "Body"
                 }]
             
@@ -123,3 +123,33 @@ app.get('/users', (req,res)=>
 
     
 
+            // HEADERS PARAMETER
+
+            app.get('/users/headers', (req,res)=>
+                {
+            
+                    console.log("Body parameter recieve :", req.headers)
+                
+                    let users = [{
+                        auth : req.headers.authorization,
+                        connection: req.headers.connection,
+                        class: "Body"
+                    }]
+                
+                    try {
+                         res.status(201).json(
+                            {
+                                data: users,
+                                status: "success"
+                            }
+                         );
+                    } catch (error) {
+                        res.status(401).json(
+                            {
+                                data: [],
+                                status: "error"
+                            }
+                        )
+                    }
+                        
+                })
