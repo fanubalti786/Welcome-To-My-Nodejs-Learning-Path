@@ -27,6 +27,20 @@ const connectDB = async () => {
 connectDB()
 
 
+const TodoSchema = new mongoose.Schema({
+    id:{
+        type:Number,
+        require: true
+    },
+
+    titile:{
+        type:String,
+        require: true
+    },
+
+    descriptiion: String
+})
+
 app.get("/", (req, res) => {
   console.log("server is running");
   try {
