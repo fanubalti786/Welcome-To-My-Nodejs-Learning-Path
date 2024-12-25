@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser');
 const app = express()
 const port = 1000
 
@@ -6,6 +7,10 @@ app.listen(port,()=>
 {
     console.log(`Example App listening on port :${port}`)
 })
+
+// Middleware to parse JSON and URL-encoded data
+app.use(bodyParser.json()); // Parse JSON data
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
 app.get('/',(req,res)=>
 {
