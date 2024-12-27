@@ -94,9 +94,11 @@ app.get("/todos", async (req, res) => {
 
 app.get("/todos/:id", async (req, res) => {
   try {
-  const id = req.params?.id;
-  // let todo = await Todos.find({id:id})
-  let todo = await Todos.findOne({_id:id})
+  const getid = req.params?.id;
+  // const getid = Number(req.params?.id);
+
+  let todo = await Todos.find({id:getid})
+  // let todo = await Todos.findOne({id:id})
   // let todo = await Todos.findById(id)
 
   res.status(202).json({
@@ -111,7 +113,7 @@ app.get("/todos/:id", async (req, res) => {
   } catch (error) {
     res.status(404).json({
       data: null,
-      status: error.message,
+      status: error.message
     });
   }
 });
