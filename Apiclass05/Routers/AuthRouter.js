@@ -1,9 +1,9 @@
-require('../Controllors/AuthControllors');
+// require('../Controllors/AuthControllors');
 const { loginValidation, signupValidation } = require('../Middlewares/AuthWalidation');
 
 const router = require('express').Router();
 
-router.post('/signup', signupValidation,userin);
+router.post('/signup', signupValidation);
 router.post('/login', loginValidation);
 
 
