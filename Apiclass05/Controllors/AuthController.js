@@ -1,4 +1,5 @@
 const UsersModel = require('../Models/Users')
+const bcrypt = require('bcrypt')
 
 const signup = async (req,res)=> {
     try {
@@ -13,7 +14,9 @@ const signup = async (req,res)=> {
         }
 
         const userModel = new UsersModel({name,email,password});
-        
+        userModel.password = bcrypt.hash(password, 10);
+        await userModel.save();
+
     } catch (error) {
         
     }
