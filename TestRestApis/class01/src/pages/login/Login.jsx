@@ -44,7 +44,7 @@ const LoginForm = () => {
             {
                 handleSuccess(message);
                 localStorage.setItem('token', jwtToken);
-                localStorage.setItem('name', name)
+                localStorage.setItem('loggedInUser', name)
                 setTimeout(()=>{
                     navigate('/HomePage');
                 },1000)

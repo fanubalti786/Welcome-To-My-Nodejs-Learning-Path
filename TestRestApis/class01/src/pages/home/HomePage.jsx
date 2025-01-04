@@ -1,9 +1,70 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { handleError } from '../../utils';
 
 export default function HomePage() {
+  const [loggedInUser, setLoggedInUser] = useState('');
+  const [products, setProducts] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(()=>
+  {
+    setLoggedInUser(localStorage.getItem('loggedInUser'))
+  },[])
+
+
+  const fetchProducts = async () => 
+  {
+
+    try {
+      const url = "http://localhost:8000/products";
+      const headers = {
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      }
+
+      const response = await fetch(url,headers)
+      const result = await response.json();
+      console.log(result);
+      setProducts(result);
+
+    } catch (err) {
+      handleError(err);
+    }
+
+  }
+
+
+
+
+  useEffect(()=>
+    {
+      fetchProducts();
+    },[])
+
+  const handleLogout = () =>
+  {
+    localStorage.removeItem('token');
+    localStorage.removeItem('loggedInUser');
+    setTimeout(()=> {
+      navigate('/Login');
+    }, 1000)
+  }
+
   return (
     <div>
-      Home
+      {loggedInUser}
+      <button onClick={handleLogout}>logout</button>
+      <div>
+        {products && products?.map((item, index) => 
+        {
+          <ul key={index}>
+            <span>{item.name} : {item.price}</span>
+
+          </ul>
+        })}
+      </div>
     </div>
   )
 }
