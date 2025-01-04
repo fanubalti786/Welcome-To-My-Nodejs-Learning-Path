@@ -18,13 +18,50 @@ const LoginForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = loginInfo;
 
     if (!email || !password) {
       return handleError("name, and password are required")
     } 
+
+    try {
+            const url = "http://localhost:8000/auth/login";
+            const response = await fetch(url, {
+                method: POST,
+                headers: {
+                    'Content-Type': 'appliction/json'
+                },
+                body: JSON.stringify(loginInfo)
+            });
+    
+    
+            const result = await response.json();
+            console.log(result)
+            const {success, message, jwtToken, name, error} = result;
+            if(success)
+            {
+                handleSuccess(message);
+                localStorage.setItem('token', jwtToken);
+                localStorage.setItem('name', name)
+                setTimeout(()=>{
+                    navigate('/HomePage');
+                },1000)
+            }else if(error)
+            {
+                const details = error?.details[0].message;
+                handleError(details);
+            }else if(!success)
+            {
+                handleError(message);
+            }
+    
+    
+        } catch (err) {
+            handleError(err);
+        }
+
   };
 
   const handleForgotPassword = () => {
