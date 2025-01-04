@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { handleError } from "../../utils";
+import { handleError, handleSuccess } from "../../utils";
 import { ToastContainer } from "react-toastify";
 
 const SignUpForm = () => {
@@ -39,7 +39,19 @@ const SignUpForm = () => {
                 'Content-Type': 'appliction/json'
             },
             body: JSON.stringify(signinInfo)
-        })
+        });
+
+
+        const result = await response.json();
+        console.log(result)
+        const {success, message} = result;
+        if(success)
+        {
+            handleSuccess(message);
+            setTimeout(()=>{},1000)
+        }
+
+
     } catch (error) {
         
     }
