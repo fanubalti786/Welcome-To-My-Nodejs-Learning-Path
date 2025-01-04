@@ -18,7 +18,7 @@ const SignUpForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // if (signinInfo.name && signinInfo.email && signinInfo.password) {
     //   alert(`Name: ${signinInfo.name}\nEmail: ${signinInfo.email}\nPassword: ${signinInfo.password}`);
@@ -29,6 +29,19 @@ const SignUpForm = () => {
 
     if (!name || !email || !password) {
       return handleError("name, email, and password are required");
+    }
+
+    try {
+        const url = "http://localhost:8000/auth/signin";
+        const response = await fetch(url, {
+            method: POST,
+            headers: {
+                'Content-Type': 'appliction/json'
+            },
+            body: JSON.stringify(signinInfo)
+        })
+    } catch (error) {
+        
     }
   };
 
