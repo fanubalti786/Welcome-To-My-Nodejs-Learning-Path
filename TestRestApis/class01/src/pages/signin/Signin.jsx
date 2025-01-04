@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleError, handleSuccess } from "../../utils";
 import { ToastContainer } from "react-toastify";
 
@@ -9,6 +9,8 @@ const SignUpForm = () => {
     email: '',
     password: ''
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,11 +46,17 @@ const SignUpForm = () => {
 
         const result = await response.json();
         console.log(result)
-        const {success, message} = result;
+        const {success, message, error} = result;
         if(success)
         {
             handleSuccess(message);
-            setTimeout(()=>{},1000)
+            setTimeout(()=>{
+                navigate('/Login');
+            },1000)
+        }else if(error)
+        {
+            const details = error?.details[0].message;
+            handleError(details);
         }
 
 
@@ -78,7 +86,7 @@ const SignUpForm = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             placeholder="Enter your name"
-            required
+            // required
           />
         </div>
         <div className="mb-6">
@@ -93,7 +101,7 @@ const SignUpForm = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             placeholder="Enter your email"
-            required
+            // required
             
           />
         </div>
@@ -109,7 +117,7 @@ const SignUpForm = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             placeholder="Enter your password"
-            required
+            // required
             
           />
         </div>
