@@ -57,11 +57,14 @@ const SignUpForm = () => {
         {
             const details = error?.details[0].message;
             handleError(details);
+        }else if(!success)
+        {
+            handleError(message);
         }
 
 
-    } catch (error) {
-        
+    } catch (err) {
+        handleError(err);
     }
   };
 

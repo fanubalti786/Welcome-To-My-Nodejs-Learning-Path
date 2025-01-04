@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+import { handleError } from "../../utils";
 
 const LoginForm = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -10,23 +14,22 @@ const LoginForm = () => {
     const { name, value } = e.target;
     setLoginInfo((prevState) => ({
       ...prevState,
-      [name]: value, // Update only the changed field
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = loginInfo; // Access state correctly
-    if (email && password) {
-      alert(`Email: ${email}\nPassword: ${password}`);
-    } else {
-      alert("Please fill out all fields!");
-    }
+    const { email, password } = loginInfo;
+
+    if (!email || !password) {
+      return handleError("name, and password are required")
+    } 
   };
 
   const handleForgotPassword = () => {
-    alert("Redirecting to the password reset page...");
-    // Add navigation logic here (e.g., using React Router)
+    toast.info("Redirecting to the password reset page...");
+    // Add navigation logic here
   };
 
   return (
@@ -46,11 +49,11 @@ const LoginForm = () => {
             type="email"
             id="email"
             name="email"
-            value={loginInfo.email} // Correct value binding
+            value={loginInfo.email}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             placeholder="Enter your email"
-            required
+            // required
           />
         </div>
         <div className="mb-6">
@@ -61,11 +64,11 @@ const LoginForm = () => {
             type="password"
             id="password"
             name="password"
-            value={loginInfo.password} // Correct value binding
+            value={loginInfo.password}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             placeholder="Enter your password"
-            required
+            // required
           />
         </div>
         <div className="flex justify-between items-center mb-6">
@@ -83,7 +86,12 @@ const LoginForm = () => {
         >
           Login
         </button>
+        <div className="text-center mt-4">
+          <span className="text-sm text-gray-600">Don't have an account?</span>
+          <Link to="/Signin" className="text-blue-600 font-semibold ml-2">Signin</Link>
+        </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };
