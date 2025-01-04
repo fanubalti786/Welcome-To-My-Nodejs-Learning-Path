@@ -13,14 +13,12 @@ export default function HomePage() {
 
   // Fetch data directly when component is called
   const fetchData = async () => {
-    alert('next before fetch api')
     const result = await api();
     setData(result);
   };
 
   // Call fetchData when the component renders
   if (!data) {
-    alert("before fetch api")
     fetchData();  // Fetch the data on render, though this is not recommended
   }
 
