@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const UsersModel = require('../Models/Users');
 
-const signup = async (req, res) => {
+const signup = async (req, res , next) => {
+    
     try {
         const { name, email, password } = req.body;
         
@@ -43,6 +44,7 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
     try {
+        // 
         const {email, password } = req.body;
         const errorMsg = "Auth failed email and password is wrong";
         
@@ -63,7 +65,7 @@ const login = async (req, res) => {
             });
         }
 
-        const jwToken = await jwt.sign(
+        const jwToken =  jwt.sign(
             {email: user.email, _id: user._id},
             process.env.JWT_SECRET,
             {expiresIn: '24h'}
