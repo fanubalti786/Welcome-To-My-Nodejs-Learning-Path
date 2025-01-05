@@ -44,7 +44,7 @@ export default function App() {
           {/* <Route path='/' element={<HomePage/> } /> */}
           <Route path='/*' element={<PublicRoute element={<NoPage/>}/> } />
           <Route path='/signin' element={<PublicRoute element={<Signin/>}/> } />
-          <Route path='/login' element={<Login /> } />
+          <Route path='/login' element={<PublicRoute element={<Login />} /> } />
 
 
 
