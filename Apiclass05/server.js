@@ -1,4 +1,5 @@
 require('dotenv').config()
+const jwt = require('jsonwebtoken')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -19,7 +20,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(cors())
 app.use('/auth', AuthRouter)
 app.use('/product', ProductRouter)
-app.use('/verify', (req,res,next)=>
+app.get('/verify', (req,res)=>
 {
     const auth = req.headers['authorization'];
     if(!auth)
@@ -32,16 +33,19 @@ app.use('/verify', (req,res,next)=>
 
     try {
         const decoded = jwt.verify(auth, process.env.JWT_SECRET);
+        console.log(decoded)
         if(decoded)
         {
           return res.status(204).json({
+            message: "verify done",
             success: true
           })
         }
 
         if(!decoded)
           {
-            return res.status(204).json({
+            return res.status(403).json({
+              message: "not valid",
               success: false
             })
           }
@@ -49,7 +53,7 @@ app.use('/verify', (req,res,next)=>
         
     } catch (error) {
         return res.status(403).json({
-            message: "Unauthorized, jwt token is require",
+            message: error,
             success: false
         });
     }
