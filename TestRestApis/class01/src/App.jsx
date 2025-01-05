@@ -24,10 +24,36 @@ export default function App() {
 
     }
 
+
+    // const PrivateRoute = async ({ element }) => {
+    //   if (localStorage.getItem("token")) {
+    //     const url = "http://localhost:3000/verify";
+    //     const headers = {
+    //       headers: {
+    //         Authorization: localStorage.getItem("token"),
+    //       },
+    //     };
+      
+  
+    //     const response = await fetch(url, headers);
+    //     const result= await response.json();
+    //     // const {success} = result;
+    //     // alert("hello")
+  
+    //     if (result.success) {
+    //       return element;
+    //     } else {
+    //       return <Navigate to="/login" />;
+    //     }
+    //   } else {
+    //     return <Navigate to="/login" />;
+    //   }
+    // };
+
     const PrivateRoute = ({element}) =>
       {
         if(localStorage.getItem('token'))
-        { return element; }
+        { return element }
         else
         { return <Navigate to='/login' /> }
 
