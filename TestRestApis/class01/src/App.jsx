@@ -10,40 +10,42 @@ export default function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  const PrivateRoute = ({element}) =>
-  {
-    return isAuthenticated ? element: <Navigate to="/login" />
-  }
+  // const PrivateRoute = ({element}) =>
+  // {
+  //   return isAuthenticated ? element: <Navigate to="/login" />
+  // }
 
-  // const PublicRoute = ({element}) =>
-  //   {
-  //     if(localStorage.getItem('token'))
-  //     { return <Navigate to="/HomePage" /> }
-  //     else
-  //     { return element; }
+  const PublicRoute = ({element}) =>
+    {
+      if(localStorage.getItem('token'))
+      { return <Navigate to="/" /> }
+      else
+      { return element; }
 
-  //   }
+    }
 
-  //   const PrivateRoute = ({element}) =>
-  //     {
-  //       if(localStorage.getItem('token'))
-  //       { return element; }
-  //       else
-  //       { return <Navigate to='/login' /> }
+    const PrivateRoute = ({element}) =>
+      {
+        if(localStorage.getItem('token'))
+        { return element; }
+        else
+        { return <Navigate to='/login' /> }
 
   
-  //     }
+      }
 
 
   return (
     <div>
-      <RefreshHandler setIsAuthenticated={setIsAuthenticated}/>
       <Router>
+      {/* <RefreshHandler setIsAuthenticated={setIsAuthenticated}/> */}
         <Routes>
-          <Route path='/' element={<HomePage/> } />
-          <Route path='/*' element={<NoPage/> } />
-          <Route path='/signin' element={<Signin/> } />
-          <Route path='/login' element={<PrivateRoute element={<HomePage />} />} />
+          <Route path='/' element={<PrivateRoute element={<HomePage />} />} />
+          {/* <Route path='/' element={<HomePage/> } /> */}
+          <Route path='/*' element={<PublicRoute element={<NoPage/>}/> } />
+          <Route path='/signin' element={<PublicRoute element={<Signin/>}/> } />
+          <Route path='/login' element={<Login /> } />
+
 
 
           

@@ -11,13 +11,13 @@ export default function RefreshHandler(setIsAuthenticated) {
             setIsAuthenticated(true);
             if(location.pathname === '/' || 
                location.pathname === '/login' ||
-               location.pathname === 'signup'
+               location.pathname === '/signup'
             )
             {
                 navigate('/home', {replace: false});
             }
         }
-    },[location, navigate, setAuthenticated ])
+    },[location, navigate, setIsAuthenticated ])
   return (
     null
   )

@@ -32,13 +32,13 @@ const SignUpForm = () => {
     if (!name || !email || !password) {
       return handleError("name, email, and password are required");
     }
-
+    console.log(signinInfo)
     try {
-        const url = "http://localhost:8000/auth/signin";
+        const url = "http://localhost:3000/auth/signup";
         const response = await fetch(url, {
-            method: POST,
+            method: "POST",
             headers: {
-                'Content-Type': 'appliction/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(signinInfo)
         });

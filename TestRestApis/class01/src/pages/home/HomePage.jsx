@@ -4,20 +4,15 @@ import { handleError } from '../../utils';
 
 export default function HomePage() {
   const [loggedInUser, setLoggedInUser] = useState('');
-  const [products, setProducts] = useState('');
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
-
-  useEffect(()=>
-  {
-    setLoggedInUser(localStorage.getItem('loggedInUser'))
-  },[])
 
 
   const fetchProducts = async () => 
   {
 
     try {
-      const url = "http://localhost:8000/products";
+      const url = "http://localhost:3000/product";
       const headers = {
         headers: {
           'Authorization': localStorage.getItem('token')
@@ -40,6 +35,7 @@ export default function HomePage() {
 
   useEffect(()=>
     {
+    setLoggedInUser(localStorage.getItem('loggedInUser'))
       fetchProducts();
     },[])
 
@@ -53,21 +49,24 @@ export default function HomePage() {
   }
 
   return (
-    <div>
+    <div className='h-screen w-screen flex flex-col justify-center items-center gap-4'>
       {loggedInUser}
-      <button onClick={handleLogout}>logout</button>
+      <button onClick={handleLogout} className='py-2 px-5 border bg-gray-500 text-white rounded-lg'>logout</button>
       <div>
-        {products && products?.map((item, index) => 
-        {
+        {products.map((item, index) =>{
+        return(
+
           <ul key={index}>
             <span>{item.name} : {item.price}</span>
 
           </ul>
-        })}
+          )
+})}
       </div>
     </div>
   )
 }
+
 
 
 

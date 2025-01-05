@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
-import { handleError } from "../../utils";
+import { handleError,handleSuccess } from "../../utils";
 
 const LoginForm = () => {
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: ''
   });
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +29,11 @@ const LoginForm = () => {
     } 
 
     try {
-            const url = "http://localhost:8000/auth/login";
+            const url = "http://localhost:3000/auth/login";
             const response = await fetch(url, {
-                method: POST,
+                method: "POST",
                 headers: {
-                    'Content-Type': 'appliction/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(loginInfo)
             });
@@ -39,15 +41,14 @@ const LoginForm = () => {
     
             const result = await response.json();
             console.log(result)
-            const {success, message, jwtToken, name, error} = result;
+            const {success, message, jwToken, name, error} = result;
             if(success)
             {
                 handleSuccess(message);
-                localStorage.setItem('token', jwtToken);
-                localStorage.setItem('loggedInUser', name)
-                setTimeout(()=>{
-                    navigate('/HomePage');
-                },1000)
+                localStorage.setItem('token', jwToken);
+                localStorage.setItem('name', name);
+               
+                navigate("/")
             }else if(error)
             {
                 const details = error?.details[0].message;
