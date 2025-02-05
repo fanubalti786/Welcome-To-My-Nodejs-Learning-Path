@@ -4,7 +4,6 @@ require('dotenv').config()
 const ensureAuthenticated = (req,res,next)=>
 {
     const auth = req.headers['authorization'];
-    console.log(auth)
     if(!auth)
     {
         return res.status(403).json({
