@@ -78,6 +78,24 @@ export default function App() {
         </Routes>
       </Router>
     </div>
+
+
+    // <div>
+    //   <Router>
+    //   {/* <RefreshHandler setIsAuthenticated={setIsAuthenticated}/> */}
+    //     <Routes>
+    //       <Route path='/' element={<HomePage />} />
+    //       {/* <Route path='/' element={<HomePage/> } /> */}
+    //       <Route path='/*' element={<NoPage/>} />
+    //       <Route path='/signin' element={<Signin/>} />
+    //       <Route path='/login' element={<Login />}/>
+
+
+
+          
+    //     </Routes>
+    //   </Router>
+    // </div>
     
   )
 }

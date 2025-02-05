@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { handleError } from '../../utils';
+import { ToastContainer } from "react-toastify";
+import { handleError, handleSuccess } from '../../utils';
 
 export default function HomePage() {
   const [loggedInUser, setLoggedInUser] = useState('');
@@ -14,15 +15,25 @@ export default function HomePage() {
     try {
       const url = "http://localhost:3000/product";
       const headers = {
-        headers: {
-          'Authorization': localStorage.getItem('token')
-        }
+        
+          'Authorization': localStorage.getItem('token'),
+          'Content-Type': 'application/json' // Ensure backend reads it as JSON
+        
       }
 
-      const response = await fetch(url,headers)
+      const response = await fetch(url,{
+        method: "GET", // Specify method
+        headers: headers // Correct headers format
+      })
       const result = await response.json();
       console.log(result);
-      setProducts(result);
+      const {message, success, data} = result;
+      if(!success){
+        handleError(message)
+      }
+      else{
+        setProducts(data);
+      }
 
     } catch (err) {
       handleError(err);
@@ -35,7 +46,7 @@ export default function HomePage() {
 
   useEffect(()=>
     {
-    setLoggedInUser(localStorage.getItem('loggedInUser'))
+    setLoggedInUser(localStorage.getItem('name'))
       fetchProducts();
     },[])
 
@@ -53,7 +64,7 @@ export default function HomePage() {
       {loggedInUser}
       <button onClick={handleLogout} className='py-2 px-5 border bg-gray-500 text-white rounded-lg'>logout</button>
       <div>
-        {products && products?.map((item, index) =>{
+        {products?.map((item, index) =>{
         return(
 
           <ul key={index}>
@@ -63,6 +74,8 @@ export default function HomePage() {
           )
 })}
       </div>
+      <ToastContainer/>
+      
     </div>
   )
 }
